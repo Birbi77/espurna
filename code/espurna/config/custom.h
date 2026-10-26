@@ -28,7 +28,7 @@
 // ===== Relé (cseppvíz-szivattyú) =====
 #define RELAY1_PIN              12     // D6
 #define RELAY1_TYPE             RELAY_TYPE_NORMAL   // fordított logikához: RELAY_TYPE_INVERSE
-#define RELAY1_PROVIDER         RELAY_PROVIDER_RELAY
+
 
 // ===== Bináris bemenet (optós visszacsatolás) =====
 #define DIGITAL_SUPPORT         1
@@ -37,7 +37,7 @@
 #define DIGITAL1_DEFAULT_VALUE  HIGH                // optó nyitva = HIGH, aktív = LOW
 
 // ===== PWM / ventilátor =====
-#define LIGHT_PROVIDER          LIGHT_PROVIDER_DEFAULT
+
 #define LIGHT_CHANNELS          1
 #define LIGHT_CH1_PIN           13     // D7
 #define LIGHT_CH1_INVERSE       0
