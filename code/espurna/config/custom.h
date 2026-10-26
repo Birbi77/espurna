@@ -1,100 +1,43 @@
-// ------------------------------------------------------------------------------
-// Example file for custom.h
-// Either copy and paste this file then rename removing the .example or create your
-// own file: 'custom.h'
-// This file allows users to create their own configurations.
-// See 'code/espurna/config/general.h' for default settings.
-//
-// See: https://github.com/xoseperez/espurna/wiki/Software-features#enabling-features
-// and 'code/platformio_override.ini.example' for more details.
-// ------------------------------------------------------------------------------
+// ===== Eszköz azonosítás =====
+#define MANUFACTURER            "WEMOS"
+#define DEVICE                  "D1_MINI_DIYZTZ"
 
+// ===== Kommunikáció =====
+#define MQTT_SUPPORT            1
+#define DOMOTICZ_SUPPORT        1      // Domoticz idx/topic kezelés (domoticz/in, domoticz/out)
+#define WEB_SUPPORT             1
 
-// Example of a Sonoff Basic board with some options disabled to reduce firmware size.
+// Opcionális, hogy az első bootnál már csatlakozzon:
+// #define WIFI1_SSID           "halozat_neve"
+// #define WIFI1_PASS           "jelszo"
+// #define ADMIN_PASS           "sajat_jelszo"
+// #define MQTT_SERVER          "192.168.1.10"
 
-#if defined(MY_SONOFF_BUILD01)    // This section will be used when build_src_flags contains
-                                  //  -DMY_SONOFF_BUILD01 in 'platformio_override.ini'
+// ===== I2C + BME280 =====
+#define I2C_SUPPORT             1
+#define I2C_SDA_PIN             4      // D2
+#define I2C_SCL_PIN             5      // D1
+#define BMX280_SUPPORT          1
+#define BMX280_ADDRESS          0x76   // ha nem találja: 0x77, vagy 0 = automatikus
 
-    #define MANUFACTURER               "ITEAD"
-    #define DEVICE                     "SONOFF_BASIC_BUILD01"
+// ===== DS18B20 (1-Wire, max 3 db egy buszon) =====
+#define DS18B20_SUPPORT         1
+#define DS18B20_PIN             2      // D4 (GPIO2)
+#define DS18B20_PULLUP          0      // külső 4,7k felhúzót használunk
 
-    // Disable these
-    #define UART_SUPPORT               0
-    #define ALEXA_SUPPORT              0
-    #define DOMOTICZ_SUPPORT           0
-    #define HOMEASSISTANT_SUPPORT      0
-    #define THINGSPEAK_SUPPORT         0
+// ===== Relé (cseppvíz-szivattyú) =====
+#define RELAY1_PIN              12     // D6
+#define RELAY1_TYPE             RELAY_TYPE_NORMAL   // fordított logikához: RELAY_TYPE_INVERSE
+#define RELAY1_PROVIDER         RELAY_PROVIDER_RELAY
 
-    // Buttons
-    #define BUTTON1_PIN         	0
-    #define BUTTON1_CONFIG      	BUTTON_PUSHBUTTON | BUTTON_DEFAULT_HIGH
-    #define BUTTON1_RELAY       	1
+// ===== Bináris bemenet (optós visszacsatolás) =====
+#define DIGITAL_SUPPORT         1
+#define DIGITAL1_PIN            14                  // D5
+#define DIGITAL1_PIN_MODE       INPUT_PULLUP
+#define DIGITAL1_DEFAULT_VALUE  HIGH                // optó nyitva = HIGH, aktív = LOW
 
-    // Relays
-    #define RELAY1_PIN          	12
-    #define RELAY1_TYPE         	RELAY_TYPE_NORMAL
-
-    // LEDs
-    #define LED1_PIN            	13
-    #define LED1_PIN_INVERSE    	1
-
-
-// Example of the Sonoff Basic board above but with two buttons on different GPIOs.
-// The two buttons both toggle the one RELAY but ALL button events send MQTT values.
-// An MQTT based system can then carry out differnt functions depending on
-// the 'DOUBLE CLICK, LONG CLICK OR LONG-LONG CLICK' trigger. A BMX280 environment
-// sensor is also connected using I2C on GPIO 1 and 3.
-
-#elif defined(MY_SONOFF_BUILD02)    // This section will be used when build_src_flags contains
-                                    //  -DMY_SONOFF_BUILD02 in 'platformio_override.ini
-
-    // Info - Custom Basic with BMX280 I2C on GPIO 1 and 3
-    #define MANUFACTURER            "ITEAD"
-    #define DEVICE                  "SONOFF_BASIC_BMX280"    // You can use your own name here
-
-    // Disable these
-    #define UART_SUPPORT            0
-    #define ALEXA_SUPPORT           0
-    #define DOMOTICZ_SUPPORT        0
-    #define HOMEASSISTANT_SUPPORT   0
-    #define THINGSPEAK_SUPPORT      0
-
-    // Always publish button events to MQTT
-    #define BUTTON_MQTT_SEND_ALL_EVENTS     1
-
-    // Buttons
-    #define BUTTON1_PIN             0    // Built in button.
-    #define BUTTON1_CONFIG          BUTTON_PUSHBUTTON | BUTTON_DEFAULT_HIGH
-    #define BUTTON1_RELAY           1
-    #define BUTTON1_PRESS           BUTTON_MODE_NONE
-    #define BUTTON1_CLICK           BUTTON_MODE_TOGGLE
-    #define BUTTON1_DBLCLICK        BUTTON_MODE_NONE
-    #define BUTTON1_LNGCLICK        BUTTON_MODE_OFF
-    #define BUTTON1_LNGLNGCLICK     BUTTON_MODE_NONE
-
-    #define BUTTON2_PIN             2    // External push button connected between IO2 and GND.
-    #define BUTTON2_CONFIG          BUTTON_PUSHBUTTON | BUTTON_SET_PULLUP | BUTTON_DEFAULT_HIGH
-    #define BUTTON2_RELAY           1
-    #define BUTTON2_PRESS           BUTTON_MODE_NONE
-    #define BUTTON2_CLICK           BUTTON_MODE_TOGGLE
-    #define BUTTON2_DBLCLICK        BUTTON_MODE_NONE
-    #define BUTTON2_LNGCLICK        BUTTON_MODE_NONE
-    #define BUTTON2_LNGLNGCLICK     BUTTON_MODE_NONE
-
-    // Relays
-    #define RELAY1_PIN              12
-    #define RELAY1_TYPE             RELAY_TYPE_NORMAL
-
-    // LEDs
-    #define LED1_PIN                13
-    #define LED1_PIN_INVERSE        1
-
-    // Non-default I2C on hardware UART0 pins. Make sure to disable UART for these to work!
-    #define I2C_SDA_PIN             1
-    #define I2C_SCL_PIN             3
-
-    // BMX280 depends on I2C
-    #define BMX280_SUPPORT          1
-    #define BMX280_ADDRESS          0x76
-
-#endif
+// ===== PWM / ventilátor =====
+#define LIGHT_PROVIDER          LIGHT_PROVIDER_DEFAULT
+#define LIGHT_CHANNELS          1
+#define LIGHT_CH1_PIN           13     // D7
+#define LIGHT_CH1_INVERSE       0
