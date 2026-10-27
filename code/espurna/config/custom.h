@@ -30,6 +30,8 @@
 #define RELAY1_TYPE             RELAY_TYPE_NORMAL   // fordított logikához: RELAY_TYPE_INVERSE
 #define RELAY2_PIN              16     // D0 -> NPN bázis (ENA)
 #define RELAY2_TYPE             RELAY_TYPE_NORMAL
+#define RELAY3_PIN              0      // D3 -> DIR
+#define RELAY3_TYPE             RELAY_TYPE_NORMAL
 
 // ===== Bináris bemenet (optós visszacsatolás) =====
 #define DIGITAL_SUPPORT         1
